@@ -52,12 +52,12 @@ def upload_file():
 
       p = (m.predict(a))
 
-      print(p)
+      print(p[0][0])
 
       if p > 0.5:
-        x = "Predicted To Have Pneumonia With Confidence " + str(p*100)
+        x = "Predicted To Have Pneumonia With Confidence " + str(p*100) + "%"
       else:
-        x = "Predicted To Not Have Pneumonia With Confidence " + str(100- p*100 )
+        x = "Predicted To Not Have Pneumonia With Confidence " + str(100- (p*100.0)) + "%"
 
 
       tf.keras.backend.clear_session()
