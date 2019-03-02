@@ -1,3 +1,3 @@
-# Cats Vs Dogs image Classifier
+# Pneumonia Classifier
 
 You Can Try Out the App At https://cats-vs-dogs-image-classifier.herokuapp.com/
