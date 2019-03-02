@@ -63,7 +63,7 @@ def upload_file():
       tf.keras.backend.clear_session()
 
 
-      return x
+      return render_template('out.html' , i)
 
 @app.route('/help')
 def hel():
