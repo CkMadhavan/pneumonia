@@ -55,9 +55,9 @@ def upload_file():
       print(p[0][0])
 
       if p > 0.5:
-        x = "Predicted To Have Pneumonia"
+        i = "Predicted To Have Pneumonia"
       else:
-        x = "Predicted To Not Have Pneumonia"
+        i = "Predicted To Not Have Pneumonia"
 
 
       tf.keras.backend.clear_session()
