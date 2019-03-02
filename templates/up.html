@@ -7,15 +7,16 @@
                 <center><img src = {{url_for('static' , filename = 'sabertechnologies.png')}}></center>
                     <div style=background:#fff;border-radius:15px;padding:10px;>
                         <center><h1 style=color:#000;border-radius:5px; >PNEUMONIA</h1></center><br>
-      <center><h2>Select An Image To Predict If It Has Pneumonia Or Not</h2><br>
+      <center><h2>Select An Chest X-Ray Image To Predict If It Has Pneumonia Or Not</h2><br>
       <form id="uploader" action = "https://pneumonia-classifier.herokuapp.com/uploader" method = "POST" accept="image/jpg , image/jpeg , image/png" enctype = "multipart/form-data">
         <input type = "file" name = "file" /><br><br>
         <input type = "submit">
       </form></center>
     </center>
-                  
+    </div>              
                   <br>
       <center><a href={{url_for('hel')}}>KNOW MORE</a></center>
+    </div>
   </body>
 
 </html>
