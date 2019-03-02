@@ -1,3 +1,3 @@
 # Pneumonia Classifier
 
-You Can Try Out the App At https://cats-vs-dogs-image-classifier.herokuapp.com/
+You Can Try Out the App At https://pneumonia.herokuapp.com/
