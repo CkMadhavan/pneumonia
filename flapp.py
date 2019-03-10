@@ -24,29 +24,29 @@ def upload_file():
 
       print(a.shape)
 
-      m = tf.keras.Sequential()
+      model = tf.keras.Sequential()
 
-      m.add(tf.keras.layers.Conv2D(256 ,(3,3) , input_shape = (28 , 28 , 1)))
+      m.add(tf.keras.layers.Conv2D(512 ,(3,3) , input_shape=(28,28 , 1)))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.MaxPooling2D(pool_size = (2,2)))
 
-      m.add(tf.keras.layers.Conv2D(256 ,(3,3)))
+      m.add(tf.keras.layers.Conv2D(512 ,(3,3)))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.MaxPooling2D(pool_size = (2,2)))
 
-      m.add(tf.keras.layers.Conv2D(256 ,(3,3)))
+      m.add(tf.keras.layers.Conv2D(512 ,(3,3)))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.MaxPooling2D(pool_size = (2,2)))
 
       m.add(tf.keras.layers.Flatten())
-      m.add(tf.keras.layers.Dense(64))
+      m.add(tf.keras.layers.Dense(128))
       m.add(tf.keras.layers.Activation('relu'))
-      m.add(tf.keras.layers.Dense(64))
+      m.add(tf.keras.layers.Dense(128))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.Dense(1))
       m.add(tf.keras.layers.Activation('sigmoid'))
 
-      m.compile(loss = 'binary_crossentropy' , optimizer = 'adam' , metrics = ['acc'])
+      m.compile(loss = 'binary_crossentropy' , optimizer = tf.keras.optimizers.Adam(lr = 0.000001) , metrics = ['acc'])
 
       m.load_weights("weight.h5")
 
