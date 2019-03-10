@@ -24,7 +24,7 @@ def upload_file():
 
       print(a.shape)
 
-      model = tf.keras.Sequential()
+      m = tf.keras.Sequential()
 
       m.add(tf.keras.layers.Conv2D(512 ,(3,3) , input_shape=(28,28 , 1)))
       m.add(tf.keras.layers.Activation('relu'))
