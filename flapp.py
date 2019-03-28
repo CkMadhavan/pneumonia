@@ -13,51 +13,64 @@ def index():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':
+       
+      input_dim = 50
 
       f = request.files['file']
+      print(f)
+      uploaded_files = request.files.getlist("file")
+      print(uploaded_files)
 
-      f = Image.open(request.files['file'])
-      f = f.resize((28,28))
-      f = f.convert('L')
-      a = np.asarray(f)
-      a = a.reshape(1,28,28,1)
+      infer = []
 
-      print(a.shape)
+      for f in uploaded_files:
+
+        f = Image.open(f)
+        f = f.resize((input_dim,input_dim))
+        f = f.convert('L')
+        a = np.asarray(f)
+        a = a.reshape(1,input_dim,input_dim,1)
+        infer.append(a)
+        
+      infer = np.array(infer).reshape(-1 , input_dim,input_dim,1)
 
       m = tf.keras.Sequential()
 
-      m.add(tf.keras.layers.Conv2D(512 ,(3,3) , input_shape=(28,28 , 1)))
+      m.add(tf.keras.layers.Conv2D(64 ,(3,3) , input_shape=(input_dim,input_dim , 1)))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.MaxPooling2D(pool_size = (2,2)))
 
-      m.add(tf.keras.layers.Conv2D(512 ,(3,3)))
+      m.add(tf.keras.layers.Conv2D(64 ,(3,3)))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.MaxPooling2D(pool_size = (2,2)))
 
-      m.add(tf.keras.layers.Conv2D(512 ,(3,3)))
+      m.add(tf.keras.layers.Conv2D(64 ,(3,3)))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.MaxPooling2D(pool_size = (2,2)))
 
       m.add(tf.keras.layers.Flatten())
-      m.add(tf.keras.layers.Dense(128))
+      m.add(tf.keras.layers.Dense(64))
       m.add(tf.keras.layers.Activation('relu'))
-      m.add(tf.keras.layers.Dense(128))
+      m.add(tf.keras.layers.Dense(32))
       m.add(tf.keras.layers.Activation('relu'))
       m.add(tf.keras.layers.Dense(1))
       m.add(tf.keras.layers.Activation('sigmoid'))
 
-      m.compile(loss = 'binary_crossentropy' , optimizer = tf.keras.optimizers.Adam(lr = 0.000001) , metrics = ['acc'])
+      m.compile(loss = 'binary_crossentropy' , optimizer = tf.keras.optimizers.Adam() , metrics = ['acc'])
 
       m.load_weights("weight.h5")
 
-      p = (m.predict(a))
+      p = (m.predict(infer))
 
-      print(p[0][0])
-
-      if p > 0.5:
-        x = "Oh No , This X-Ray Is Predicted To Have Pneumonia"
-      else:
-        x = "Hurray , This X-Ray Is Predicted To Not Have Pneumonia"
+      print(p)
+        
+      x = []
+    
+      for i in p:
+        if i > 0.5:
+            x.append("Pneumonia")
+        else:
+            x.append("Normal")
 
 
       tf.keras.backend.clear_session()
