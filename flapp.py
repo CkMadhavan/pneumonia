@@ -68,7 +68,7 @@ def upload_file():
     
       for i in p:
         if i > 0.5:
-            x.append("Pneumonia")
+            x.append("Consider Checking A Doctor")
         else:
             x.append("Normal")
 
