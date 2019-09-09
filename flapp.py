@@ -68,8 +68,10 @@ def upload_file():
     
       for i in p:
         if i > 0.5:
-            x.append("Consider Checking A Doctor")
+            text = "Consider Checking A Doctor (Prediction Percent = " , i*100
+            x.append("")
         else:
+            text = "Normal (Prediction Percent = " , 100-(i*100)
             x.append("Normal")
 
 
