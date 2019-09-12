@@ -67,7 +67,7 @@ def upload_file():
       x = []
     
       for i in p:
-        if i > 0.5:
+        if i > 0.50:
             text = "Consider Checking A Doctor"
             x.append(text)
         else:
