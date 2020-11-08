@@ -15,15 +15,16 @@ def upload_file():
    if request.method == 'POST':
        
       input_dim = 50
+      file_names = []
 
       f = request.files['file']
-      print(f)
       uploaded_files = request.files.getlist("file")
-      print(uploaded_files)
 
       infer = []
 
       for f in uploaded_files:
+
+        file_names.append(f.filename)
 
         f = Image.open(f)
         f = f.resize((input_dim,input_dim))
@@ -60,18 +61,18 @@ def upload_file():
 
       m.load_weights("weight.h5")
 
-      p = (m.predict(infer))
+      p = (m.predict(infer)).tolist()
 
       print(p)
         
       x = []
     
-      for i in p:
-        if i > 0.50:
-            text = "Pneumonia"
+      for i in range(len(p)):
+        if p[i][0] > 0.50:
+            text = file_names[i] + " : Pneumonia"
             x.append(text)
         else:
-            text = "Normal"
+            text = file_names[i] + " : Normal"
             x.append(text)
 
 
