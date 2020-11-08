@@ -14,7 +14,7 @@ def index():
 def upload_file():
    if request.method == 'POST':
        
-      input_dim = 50
+      input_dim = 256
       file_names = []
 
       f = request.files['file']
