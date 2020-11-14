@@ -7,6 +7,133 @@ from PIL import Image
 import numpy as np
 import os
 
+im_size=512
+
+inp1 = keras.layers.Input(shape = (im_size,im_size,1))
+
+o = keras.layers.Conv2D(64,(3,3) , padding="same")(inp1)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(64,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(64,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(64,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(128,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(128,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(128,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(128,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(256,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(256,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(256,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(256,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(256,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(256,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(512,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(512,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(512,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(512,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(1024,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(1024,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Conv2D(1024,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Conv2D(1024,(3,3) , padding="same")(o)
+o = keras.layers.Activation('relu')(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.MaxPooling2D((2,2),padding='same')(o)
+
+o = keras.layers.Flatten()(o)
+o = keras.layers.Dense(512 , activation = 'relu')(o)
+o = keras.layers.BatchNormalization()(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Dense(1024,activation = 'relu')(o)
+o = keras.layers.BatchNormalization()(o)
+o = keras.layers.Dropout(0.2)(o)
+o = keras.layers.Dense(2048, activation = 'relu')(o)
+o = keras.layers.BatchNormalization()(o)
+o = keras.models.Model(inputs=inp1, outputs=o)
+
+inp2 = keras.layers.Input(shape = (1,))
+t = keras.layers.Dense(512 , activation = 'relu')(inp2)
+t = keras.layers.BatchNormalization()(t)
+t = keras.layers.Dense(1024 , activation = 'relu')(t)
+t = keras.layers.BatchNormalization()(t)
+t = keras.layers.Dropout(0.2)(t)
+t = keras.models.Model(inputs=inp2, outputs=t)
+
+combined = keras.layers.concatenate([o.output, t.output])
+
+z = keras.layers.Dense(512, activation = 'relu')(combined)
+z = keras.layers.BatchNormalization()(z)
+z = keras.layers.Dropout(0.2)(z)
+z = keras.layers.Dense(1024 , activation = 'relu')(z)
+z = keras.layers.BatchNormalization()(z)
+z = keras.layers.Dropout(0.2)(z)
+z = keras.layers.Dense(2048 , activation = 'relu')(z)
+z = keras.layers.BatchNormalization()(z)
+z = keras.layers.Dense(14 , activation = 'sigmoid')(z)
+
+model = keras.models.Model(inputs=[o.input, t.input], outputs=z)
+
+model.compile(loss = 'binary_crossentropy' , optimizer = keras.optimizers.SGD(lr=learning_rate , momentum=momentum , decay= decay))
+
 @app.route('/')
 def index():
     return render_template('up.html')
@@ -16,8 +143,8 @@ def check():
     os.system("wget --load-cookies /tmp/cookies.txt \"https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=14tI0csfkqExAgLdGyiYx1CoYMCX-AYa1' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=14tI0csfkqExAgLdGyiYx1CoYMCX-AYa1\" -O chest.h5 && rm -rf /tmp/cookies.txt")
     os.system("wget --load-cookies /tmp/cookies.txt \"https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=14w2OA48YoGdl9hRVdLa8GhNVgS26sjiL' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=14w2OA48YoGdl9hRVdLa8GhNVgS26sjiL\" -O model.json && rm -rf /tmp/cookies.txt")
     
-    with open("model.json") as filename:
-        model = tf.keras.models.model_from_json(filename.read())
+    #with open("model.json") as filename:
+        #model = tf.keras.models.model_from_json(filename.read())
 
     model.load_weights("chest.h5")
 
