@@ -11,6 +11,18 @@ import os
 def index():
     return render_template('up.html')
 
+@app.route('/check')
+def check():
+    os.system("wget --load-cookies /tmp/cookies.txt \"https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=14tI0csfkqExAgLdGyiYx1CoYMCX-AYa1' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=14tI0csfkqExAgLdGyiYx1CoYMCX-AYa1\" -O chest.h5 && rm -rf /tmp/cookies.txt")
+    os.system("wget --load-cookies /tmp/cookies.txt \"https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=14w2OA48YoGdl9hRVdLa8GhNVgS26sjiL' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=14w2OA48YoGdl9hRVdLa8GhNVgS26sjiL\" -O model.json && rm -rf /tmp/cookies.txt")
+    
+    with open("model.json") as filename:
+        model = tf.keras.models.model_from_json(filename.read())
+
+    model.load_weights("chest.h5")
+
+    return model.count_params()
+
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':
