@@ -10,6 +10,13 @@ from tensorflow import keras
 
 im_size=512
 
+project_name = "Chest Xray Multilabel CNN"
+learning_rate = 1e-3
+momentum = 0.9
+epochs = 1
+steps_per_epoch = 1
+decay = learning_rate/epochs
+
 inp1 = keras.layers.Input(shape = (im_size,im_size,1))
 
 o = keras.layers.Conv2D(64,(3,3) , padding="same")(inp1)
