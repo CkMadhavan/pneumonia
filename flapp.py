@@ -6,6 +6,7 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import os
+from tensorflow import keras
 
 im_size=512
 
@@ -144,7 +145,7 @@ def check():
     os.system("wget --load-cookies /tmp/cookies.txt \"https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=14w2OA48YoGdl9hRVdLa8GhNVgS26sjiL' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=14w2OA48YoGdl9hRVdLa8GhNVgS26sjiL\" -O model.json && rm -rf /tmp/cookies.txt")
     
     #with open("model.json") as filename:
-        #model = tf.keras.models.model_from_json(filename.read())
+        #model = keras.models.model_from_json(filename.read())
 
     model.load_weights("chest.h5")
 
