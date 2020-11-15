@@ -17,9 +17,6 @@ epochs = 1
 steps_per_epoch = 1
 decay = learning_rate/epochs
 
-os.system("wget https://www.dropbox.com/s/441b2fux12sgktp/chest.h5?dl=1 -O chest.h5")
-os.system("wget https://www.dropbox.com/s/kzs3y7fl14an3nd/model.json?dl=1 -O model.json")
-
 inp1 = keras.layers.Input(shape = (im_size,im_size,1))
 
 o = keras.layers.Conv2D(64,(3,3) , padding="same")(inp1)
@@ -152,13 +149,19 @@ def index():
 @app.route('/check')
 def check():
     
+    os.system("wget https://www.dropbox.com/s/441b2fux12sgktp/chest.h5?dl=1 -O chest.h5")
+    os.system("wget https://www.dropbox.com/s/kzs3y7fl14an3nd/model.json?dl=1 -O model.json")
+
     #with open("model.json") as filename:
         #json_file = filename.read()
         #model = keras.models.model_from_json(filename.read())
 
     model.load_weights("chest.h5")
 
-    return str(model.count_params())
+    os.system("rm chest.h5")
+    os.system("rm model.json")
+
+    return str(model.count_params()) + str(os.listdir('.')
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
