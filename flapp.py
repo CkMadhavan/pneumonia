@@ -6,7 +6,6 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import os
-from tensorflow import keras
 
 @app.route('/')
 def index():
