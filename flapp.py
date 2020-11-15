@@ -157,7 +157,7 @@ def check():
 
     model.load_weights("chest.h5")
 
-    return model.count_params()
+    return str(model.count_params())
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
