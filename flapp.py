@@ -161,7 +161,7 @@ def check():
     os.system("rm chest.h5")
     os.system("rm model.json")
 
-    return str(model.count_params()) + str(os.listdir('.')
+    return str(model.count_params()) + str(os.listdir('.'))
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
